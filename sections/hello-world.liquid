@@ -1,60 +1,86 @@
 {% comment %} {% style  %}
-                      .hello-world {
-                        background-color: {{ section.settings.bg_color }};
-                      }
+              .hello-world {
+                  background-color: {{ section.settings.bg_color }};
+                   }
 {% endstyle %} {% endcomment %}
 
-{% for block in section.blocks %}
-  {% case block.type %}
-    {% when 'title' %}
-    <h2 style="background-color: {{block.settings.bg_color}}; color: {{block.settings.font_color}};">TITLE</h2>
-    {% when 'subtitle' %}
-    <h5 style="background-color: {{block.settings.bg_color}}; color: {{block.settings.font_color}};">SUBTITLE</h5>
-{% endcase %}
-{% endfor %}
+
+<div style="text-align: {{ section.settings.text_alignment }};">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'title' %}
+        <h2 style="background-color: {{block.settings.bg_color}}; color: {{block.settings.font_color}};">TITLE</h2>
+      {% when 'subtitle' %}
+        <h5 style="background-color: {{block.settings.bg_color}}; color: {{block.settings.font_color}};">SUBTITLE</h5>
+    {% endcase %}
+  {% endfor %}
+</div>
+
+
 {% comment %} <h1 class="hello-world" style="color: {{ section.settings.font_color }};">{{ section.settings.title }}</h1> {% endcomment %}
 {% schema %}
-{
-  "name": "Hello World",
-  "settings": [],
-  "blocks": [
-    {
-      "type": "title",
-      "name": "Title",
-      "settings": [
-        {
-          "type": "color",
-          "id": "bg_color",
-          "label": "Background color",
-          "placeholder": "#C63E3E"
-        }, {
-          "type": "color",
-          "id": "font_color",
-          "label": "Font color",
-          "placeholder": "#000000"
-        }
-      ]
-    }, {
-      "type": "subtitle",
-      "name": "Subtitle",
-      "settings": [
-        {
-          "type": "color",
-          "id": "bg_color",
-          "label": "Background color",
-          "placeholder": "#C63E3E"
-        }, {
-          "type": "color",
-          "id": "font_color",
-          "label": "Font color",
-          "placeholder": "#000000"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Hello World"
-    }
-  ]
-}{% endschema %}
+  {
+    "name": "Hello World",
+    "settings": [
+      {
+        "type": "select",
+        "id": "text_alignment",
+        "label": "Text Alignment",
+        "default": "center",
+        "info": "Align the text to the left, center, or right.",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          }, {
+            "value": "center",
+            "label": "Center"
+          }, {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "type": "title",
+        "name": "Title",
+        "settings": [
+          {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background color",
+            "placeholder": "#C63E3E"
+          }, {
+            "type": "color",
+            "id": "font_color",
+            "label": "Font color",
+            "placeholder": "#000000"
+          }
+        ]
+      }, {
+        "type": "subtitle",
+        "name": "Subtitle",
+        "settings": [
+          {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background color",
+            "placeholder": "#C63E3E"
+          }, {
+            "type": "color",
+            "id": "font_color",
+            "label": "Font color",
+            "placeholder": "#000000"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Hello World"
+      }
+    ]
+  }
+{% endschema %}
