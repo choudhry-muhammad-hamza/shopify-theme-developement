@@ -539,9 +539,12 @@
                   {%- endif -%}
 
                 {%- when 'material' -%}
-                  <div>
+                  {%- if product.metafields.custom.material.value != blank -%}
+                    <div>
                     <p><strong>Material: {{ product.metafields.custom.material.value }}</strong></p>
-                  </div>
+                    </div>
+                  {%- endif -%}
+                  
                   
                 {%- when 'complementary' -%}
                   <product-recommendations
