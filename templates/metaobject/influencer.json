@@ -8,6 +8,56 @@
  * ------------------------------------------------------------
  */
 {
-  "sections": {},
-  "order": []
+  "sections": {
+    "image_with_text_hP4FVF": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_MREfdE": {
+          "type": "heading",
+          "settings": {
+            "heading": "{{ metaobject.name.value }}",
+            "heading_size": "h1"
+          }
+        },
+        "text_efyzyG": {
+          "type": "text",
+          "settings": {
+            "text": "<p></p>{{ metaobject.description | metafield_tag }}",
+            "text_style": "body"
+          }
+        },
+        "button_K6RcBj": {
+          "type": "button",
+          "settings": {
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_MREfdE",
+        "text_efyzyG",
+        "button_K6RcBj"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "image_with_text_hP4FVF"
+  ]
 }
