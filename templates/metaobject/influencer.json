@@ -42,6 +42,7 @@
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
+        "image": "{{ metaobject.image.value }}",
         "height": "adapt",
         "desktop_image_width": "medium",
         "layout": "image_first",
