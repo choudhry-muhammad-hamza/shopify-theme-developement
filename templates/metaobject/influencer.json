@@ -29,8 +29,8 @@
         "button_K6RcBj": {
           "type": "button",
           "settings": {
-            "button_label": "Button label",
-            "button_link": "",
+            "button_label": "Check more details",
+            "button_link": "shopify://metaobjects/influencer/shaun-white",
             "button_style_secondary": false
           }
         }
