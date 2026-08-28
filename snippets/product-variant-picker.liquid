@@ -19,8 +19,7 @@
     {% # theme-check-disable %}
     data-selected-price-amount="{{ product.selected_or_first_available_variant.price | default: 0 | money_amount | escape }}"
     {% # theme-check-enable %}
-    {{ block.shopify_attributes }}
-  >
+    {{ block.shopify_attributes }}>
     {%- for option in product.options_with_values -%}
       {%- liquid
         assign swatch_count = option.values | map: 'swatch' | compact | size
@@ -42,21 +41,21 @@
               {{- option.selected_value -}}
             </span>
           </legend>
-          {% render 'product-variant-options',
-            product: product,
-            option: option,
-            block: block,
-            picker_type: picker_type
+          {% render 'product-variant-options'
+            , product: product
+            , option: option
+            , block: block
+            , picker_type: picker_type
           %}
         </fieldset>
       {%- elsif picker_type == 'button' -%}
         <fieldset class="js product-form__input product-form__input--pill">
           <legend class="form__label">{{ option.name }}</legend>
-          {% render 'product-variant-options',
-            product: product,
-            option: option,
-            block: block,
-            picker_type: picker_type
+          {% render 'product-variant-options'
+            , product: product
+            , option: option
+            , block: block
+            , picker_type: picker_type
           %}
         </fieldset>
       {%- else -%}
@@ -66,24 +65,22 @@
           </label>
           <div class="select">
             {%- if picker_type == 'swatch_dropdown' -%}
-              <span
-                data-selected-value
-                class="dropdown-swatch"
-              >
-                {% render 'swatch', swatch: option.selected_value.swatch, shape: block.settings.swatch_shape %}
+              <span data-selected-value class="dropdown-swatch">
+                {% render 'swatch'
+                  , swatch: option.selected_value.swatch
+                  , shape: block.settings.swatch_shape %}
               </span>
             {%- endif -%}
             <select
               id="Option-{{ section.id }}-{{ forloop.index0 }}"
               class="select__select"
               name="options[{{ option.name | escape }}]"
-              form="{{ product_form_id }}"
-            >
-              {% render 'product-variant-options',
-                product: product,
-                option: option,
-                block: block,
-                picker_type: picker_type
+              form="{{ product_form_id }}">
+              {% render 'product-variant-options'
+                , product: product
+                , option: option
+                , block: block
+                , picker_type: picker_type
               %}
             </select>
             <span class="svg-wrapper">
@@ -99,3 +96,24 @@
     </script>
   </variant-selects>
 {%- endunless -%}
+
+<div id="expected-delivery">
+  <p>Expected Delivery: {{ product.selected_or_first_available_variant.metafields.custom.delivery_date }}</p>
+</div>
+
+<script>
+  const productURL = '/products/{{ product.handle }}';
+  document.addEventListener("variant:updated",(e) => {
+    const variant = e.detail.id;
+    const url = `${productURL}?variant=${variant}&section_id=delivery-date`;
+    // console.log(url);
+    fetch(url)
+      .then(res => res.text())
+      .then(data => {
+        const parser = new DOMParser();
+        const dom = parser.parseFromString(data, "text/html");
+        const newDeliveryDate = dom.getElementById("shopify-section-delivery-date").innerHTML;
+        document.getElementById("expected-delivery").innerHTML = newDeliveryDate;  
+       })
+  })
+</script>
