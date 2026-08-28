@@ -106,7 +106,7 @@
   document.addEventListener("variant:updated",(e) => {
     const variant = e.detail.id;
     const url = `${productURL}?variant=${variant}&section_id=delivery-date`;
-     console.log(url);
+    // console.log(url);
     fetch(url)
       .then(res => res.text())
       .then(data => {
