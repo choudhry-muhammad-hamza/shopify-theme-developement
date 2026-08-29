@@ -396,11 +396,12 @@ body {
       class MyCustomElement extends HTMLElement {
         constructor() {
           super();
-          console.log('constructor called');
+          // console.log('constructor called');
+          // console.log(document.querySelector("h1").innerText);
           };
       
           connectedCallback() {
-            console.log('element added to the DOM');
+            console.log('element added to the DOM',this);
         };
         }
       
