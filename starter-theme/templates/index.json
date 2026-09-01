@@ -1,12 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "sections":{
+  "sections": {
     "heading_12e14": {
       "type": "heading",
       "settings": {
+        "text": "Hello World"
       }
     },
+    "featured_collection_mVDKiX": {
+      "type": "featured-collection",
+      "name": "Featured Collection",
+      "settings": {
+        "heading": "Featured Collection",
+        "collection": "automated-collection",
+        "products_to_show": 4
+      }
+    }
   },
   "order": [
-    "heading_12e14"
+    "heading_12e14",
+    "featured_collection_mVDKiX"
   ]
 }

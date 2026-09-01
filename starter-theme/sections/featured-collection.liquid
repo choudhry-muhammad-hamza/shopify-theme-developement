@@ -10,7 +10,7 @@
 
       <div class="product-grid">
 
-        {% for product in section.settings.collection.products limit: section.settings.products_to_show %}
+        {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
 
           <div class="product-card">
 
@@ -18,7 +18,11 @@
               <a href="{{ product.url }}">
 
                 {% if product.featured_image %}
-                  <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | escape }}">
+                  <img
+                    src="{{ product.featured_image | image_url: width: 600 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    width="600"
+                    height="600">
                 {% endif %}
 
               </a>
