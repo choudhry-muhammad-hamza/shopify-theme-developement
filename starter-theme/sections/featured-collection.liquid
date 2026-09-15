@@ -20,7 +20,6 @@
               <a href="{{ product.url }}">
 
                 {% if product.featured_image %}
-
                   <img
                     src="{{ product.featured_image | image_url: width: 600 }}"
                     alt="{{ product.featured_image.alt | escape }}"
