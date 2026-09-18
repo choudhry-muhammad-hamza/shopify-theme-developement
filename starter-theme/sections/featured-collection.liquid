@@ -1,0 +1,274 @@
+<section class="featured-collection">
+  <div class="featured-collection__container">
+
+    <div class="featured-collection__header">
+      <h2>{{ section.settings.heading }}</h2>
+
+      {% if section.settings.collection != blank %}
+        <a href="{{ section.settings.collection.url }}" class="featured-collection__view-all">
+          View All
+        </a>
+      {% endif %}
+    </div>
+
+    {% if section.settings.collection != blank %}
+      <div class="featured-collection__grid">
+
+        {% for product in section.settings.collection.products limit: section.settings.products_to_show %}
+
+          <div class="product-card">
+
+            <a href="{{ product.url }}" class="product-card__image">
+              {% if product.featured_image %}
+                <img
+                  src="{{ product.featured_image | image_url: width: 600 }}"
+                  alt="{{ product.featured_image.alt | escape }}"
+                  width="600"
+                  height="600"
+                  loading="lazy">
+              {% endif %}
+            </a>
+
+            <div class="product-card__content">
+
+              <h3 class="product-card__title">
+                <a href="{{ product.url }}">
+                  {{ product.title }}
+                </a>
+              </h3>
+
+              <div class="product-card__price">
+                {{ product.price | money }}
+              </div>
+
+              <a href="{{ product.url }}" class="product-card__button">
+                View Product
+              </a>
+
+            </div>
+
+          </div>
+
+        {% endfor %}
+
+      </div>
+
+    {% else %}
+
+      <p class="featured-collection__empty">
+        Please select a collection from the Theme Editor.
+      </p>
+
+    {% endif %}
+
+  </div>
+</section>
+
+
+<style>
+
+  .featured-collection {
+    padding: 60px 20px;
+    background: #ffffff;
+  }
+
+  .featured-collection__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+
+  .featured-collection__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+  }
+
+  .featured-collection__header h2 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  .featured-collection__view-all {
+    color: #111;
+    text-decoration: underline;
+    font-size: 16px;
+  }
+
+  /* Product Grid */
+
+  .featured-collection__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+  }
+
+  /* Product Card */
+
+  .product-card {
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    overflow: hidden;
+    transition: transform 0.2s ease
+    , box-shadow 0.2s ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Product Image */
+
+  .product-card__image {
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #f5f5f5;
+  }
+
+  .product-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .product-card:hover .product-card__image img {
+    transform: scale(1.05);
+  }
+
+  /* Product Content */
+
+  .product-card__content {
+    padding: 18px;
+  }
+
+  .product-card__title {
+    margin: 0 0 10px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .product-card__title a {
+    color: #111;
+    text-decoration: none;
+  }
+
+  .product-card__price {
+    margin-bottom: 18px;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  /* Button */
+
+  .product-card__button {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    text-align: center;
+    background: #111;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+  }
+
+  .product-card__button:hover {
+    background: #333;
+  }
+
+  /* Empty collection */
+
+  .featured-collection__empty {
+    text-align: center;
+    padding: 40px;
+    background: #f5f5f5;
+  }
+
+
+  /* Tablet */
+
+  @media screen and (max-width: 990px) {
+
+    .featured-collection__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+  }
+
+
+  /* Mobile */
+
+  @media screen and (max-width: 600px) {
+
+    .featured-collection {
+      padding: 40px 15px;
+    }
+
+    .featured-collection__header h2 {
+      font-size: 26px;
+    }
+
+    .featured-collection__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .product-card__content {
+      padding: 12px;
+    }
+
+    .product-card__title {
+      font-size: 15px;
+    }
+
+    .product-card__price {
+      font-size: 15px;
+    }
+
+    .product-card__button {
+      padding: 10px;
+      font-size: 14px;
+    }
+
+  }
+
+</style>
+
+
+{% schema %}
+  {
+    "name": "Featured Collection",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Featured Collection"
+      }, {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      }, {
+        "type": "range",
+        "id": "products_to_show",
+        "label": "Products to show",
+        "min": 2,
+        "max": 12,
+        "step": 1,
+        "default": 4
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured Collection"
+      }
+    ]
+  }
+{% endschema %}
