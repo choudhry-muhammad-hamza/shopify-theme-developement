@@ -2,7 +2,7 @@
   <div class="featured-collection__container">
 
     <div class="featured-collection__header">
-      <h2>{{ section.settings.heading }}</h2>
+      <h2>{{ section.settings.title }}</h2>
 
       {% if section.settings.collection != blank %}
         <a href="{{ section.settings.collection.url }}" class="featured-collection__view-all">
@@ -248,8 +248,8 @@
     "settings": [
       {
         "type": "text",
-        "id": "heading",
-        "label": "Heading",
+        "id": "title",
+        "label": "Title",
         "default": "Featured Collection"
       }, {
         "type": "collection",

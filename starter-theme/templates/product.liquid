@@ -1,0 +1,424 @@
+<h1>{{ product.title }}</h1>
+
+{{ 'splide.min.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'splide.min.js' | asset_url }}" defer></script>
+
+{% comment %} 
+                                    Product Page Section 
+{% endcomment %}
+
+<section class="product-page">
+
+  <section
+    id="main-carousel"
+    class="splide"
+    aria-label="My Awesome Gallery">
+    <div class="splide__track">
+      <ul class="splide__list">
+
+        {% for image in product.images %}
+          <li class="splide__slide">
+            <img
+              src="{{ image | image_url: width: 150 }}"
+              alt="{{ image.alt | escape }}"
+              width="150"
+              height="150"
+              loading="lazy">
+          </li>
+        {% endfor %}
+
+
+      </ul>
+    </div>
+  </section>
+
+
+  <ul id="thumbnails" class="thumbnails">
+
+    {% for image in product.images %}
+      <li class="thumbnail">
+        <img
+          src="{{ image | image_url: width: 150 }}"
+          alt="{{ image.alt | escape }}"
+          width="150"
+          height="150"
+          loading="lazy">
+      </li>
+    {% endfor %}
+
+
+  </ul>
+  <div class="product-page__container">
+
+    <!-- LEFT: Product Gallery -->
+    <div class="product-gallery">
+
+      <section class="splide" aria-labelledby="carousel-heading">
+        {% comment %} <h2 id="carousel-heading">Splide Basic HTML Example</h2> {% endcomment %}
+
+
+        <div class="splide__track">
+          <ul class="splide__list">
+
+            {% for image in product.images %}
+              <li class="splide__slide">
+                <img
+                  src="{{ image | image_url: width: 150 }}"
+                  alt="{{ image.alt | escape }}"
+                  width="150"
+                  height="150"
+                  loading="lazy">
+              </li>
+            {% endfor %}
+
+          </ul>
+        </div>
+      </section>
+
+      <div class="product-gallery__main">
+        {% if product.featured_image %}
+          <img
+            id="ProductMainImage"
+            src="{{ product.featured_image | image_url: width: 1000 }}"
+            alt="{{ product.featured_image.alt | escape }}"
+            width="1000"
+            height="1000">
+        {% endif %}
+      </div>
+
+      {% if product.images.size > 1 %}
+        <div class="product-gallery__thumbnails">
+
+          {% for image in product.images %}
+            <button
+              type="button"
+              class="product-gallery__thumbnail"
+              onclick="changeProductImage('{{ image | image_url: width: 1000 }}')">
+              <img
+                src="{{ image | image_url: width: 150 }}"
+                alt="{{ image.alt | escape }}"
+                width="150"
+                height="150"
+                loading="lazy">
+            </button>
+          {% endfor %}
+
+        </div>
+      {% endif %}
+
+    </div>
+
+
+    <!-- RIGHT: Product Information -->
+    <div class="product-info">
+
+      <h1 class="product-info__title">
+        {{ product.title }}
+      </h1>
+
+      <div class="product-info__price">
+        {{ product.price | money }}
+      </div>
+
+      {% if product.description != blank %}
+        <div class="product-info__description">
+          {{ product.description }}
+        </div>
+      {% endif %}
+
+
+      <!-- Add To Cart Form -->
+      <form
+        action="{{ routes.cart_add_url }}"
+        method="post"
+        enctype="multipart/form-data"
+        class="product-form">
+
+        <input
+          type="hidden"
+          name="id"
+          value="{{ product.selected_or_first_available_variant.id }}">
+
+        <!-- Quantity -->
+        <div class="product-form__quantity">
+          <label for="Quantity">
+            Quantity
+          </label>
+
+          <input
+            type="number"
+            id="Quantity"
+            name="quantity"
+            value="1"
+            min="1">
+        </div>
+
+
+        <!-- Add To Cart -->
+        <button
+          type="submit"
+          name="add"
+          class="product-form__button"
+          {% unless product.available %}
+          disabled{% endunless %}>
+
+          {% if product.available %}
+            Add to Cart
+          {% else %}
+            Sold Out
+          {% endif %}
+
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+  new Splide( '.splide' ).mount();
+</script>
+
+<style>
+
+
+  /*
+
+   ========================================= 
+   PRODUCT PAGE 
+   ========================================= 
+*/
+
+  .product-page {
+    padding: 60px 20px;
+    background: #fff;
+  }
+
+  .product-page__container {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    align-items: start;
+  }
+
+
+  /*
+
+   ========================================= 
+   PRODUCT GALLERY 
+   ========================================= 
+*/
+
+  .product-gallery__main {
+    width: 100%;
+    background: #f7f7f7;
+    overflow: hidden;
+  }
+
+  .product-gallery__main img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+
+  .product-gallery__thumbnails {
+    display: flex;
+    gap: 12px;
+    margin-top: 15px;
+    overflow-x: auto;
+  }
+
+
+  .product-gallery__thumbnail {
+    width: 80px;
+    height: 80px;
+    padding: 0;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+
+  .product-gallery__thumbnail:hover {
+    border-color: #111;
+  }
+
+
+  .product-gallery__thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+
+  /*
+
+   ========================================= 
+   PRODUCT INFORMATION 
+   ========================================= 
+*/
+
+  .product-info {
+    padding-top: 10px;
+  }
+
+
+  .product-info__title {
+    margin: 0 0 15px;
+    font-size: 38px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: #111;
+  }
+
+
+  .product-info__price {
+    margin-bottom: 25px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #111;
+  }
+
+
+  .product-info__description {
+    margin-bottom: 30px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #555;
+  }
+
+
+  /*
+
+   ========================================= 
+   QUANTITY 
+   ========================================= 
+*/
+
+  .product-form__quantity {
+    margin-bottom: 20px;
+  }
+
+
+  .product-form__quantity label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+
+  .product-form__quantity input {
+    width: 80px;
+    height: 45px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+
+
+  /*
+
+   ========================================= 
+   ADD TO CART BUTTON 
+   ========================================= 
+*/
+
+  .product-form__button {
+    width: 100%;
+    padding: 16px 20px;
+
+    border: none;
+    border-radius: 4px;
+
+    background: #111;
+    color: #fff;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+  }
+
+
+  .product-form__button:hover {
+    background: #333;
+  }
+
+
+  .product-form__button:disabled {
+    background: #999;
+    cursor: not-allowed;
+  }
+
+
+  /*
+
+   ========================================= 
+   MOBILE 
+   ========================================= 
+*/
+
+  @media screen and (max-width: 750px) {
+
+    .product-page {
+      padding: 35px 15px;
+    }
+
+    .product-page__container {
+      grid-template-columns: 1fr;
+      gap: 35px;
+    }
+
+    .product-info {
+      padding-top: 0;
+    }
+
+    .product-info__title {
+      font-size: 28px;
+    }
+
+    .product-info__price {
+      font-size: 20px;
+    }
+
+  }
+
+</style>
+
+
+<script>
+  
+  function changeProductImage(imageUrl) {
+  const mainImage = document.getElementById("ProductMainImage");
+  
+  if (mainImage) {
+    mainImage.src = imageUrl;
+  }
+  }
+</script>
+
+
+{% comment %} {% schema %}
+                                              {
+                                                "name": "Product Page",
+                                                "settings": [],
+                                                "presets": [
+                                                  {
+                                                    "name": "Product Page"
+                                                  }
+                                                ]
+                                              }
+{% endschema %} {% endcomment %}
