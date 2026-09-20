@@ -4,7 +4,7 @@
 <script src="{{ 'splide.min.js' | asset_url }}" defer></script>
 
 {% comment %} 
-                                    Product Page Section 
+                                      Product Page Section 
 {% endcomment %}
 
 <section class="product-page">
@@ -98,7 +98,7 @@
                 src="{{ image | image_url: width: 150 }}"
                 alt="{{ image.alt | escape }}"
                 width="150"
-                height="150"
+                height="200"
                 loading="lazy">
             </button>
           {% endfor %}
@@ -107,7 +107,6 @@
       {% endif %}
 
     </div>
-
 
     <!-- RIGHT: Product Information -->
     <div class="product-info">
@@ -412,13 +411,13 @@
 
 
 {% comment %} {% schema %}
-                                              {
-                                                "name": "Product Page",
-                                                "settings": [],
-                                                "presets": [
-                                                  {
-                                                    "name": "Product Page"
-                                                  }
-                                                ]
-                                              }
+                                                {
+                                                  "name": "Product Page",
+                                                  "settings": [],
+                                                  "presets": [
+                                                    {
+                                                      "name": "Product Page"
+                                                    }
+                                                  ]
+                                                }
 {% endschema %} {% endcomment %}
