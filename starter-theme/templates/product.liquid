@@ -4,7 +4,7 @@
 <script src="{{ 'splide.min.js' | asset_url }}" defer></script>
 
 {% comment %} 
-                                            Product Page Section 
+  Product Page Section 
 {% endcomment %}
 
 <section class="product-page">
@@ -19,15 +19,13 @@
         {% for image in product.images %}
           <li class="splide__slide">
             <img
-              src="{{ image | image_url: width: 150 }}"
+              src="{{ image | image_url: width: 600 }}"
               alt="{{ image.alt | escape }}"
               width="150"
               height="150"
               loading="lazy">
           </li>
         {% endfor %}
-
-
       </ul>
     </div>
   </section>
@@ -38,7 +36,7 @@
     {% for image in product.images %}
       <li class="thumbnail">
         <img
-          src="{{ image | image_url: width: 150 }}"
+          src="{{ image | image_url: width: 200 }}"
           alt="{{ image.alt | escape }}"
           width="150"
           height="150"
@@ -46,8 +44,8 @@
       </li>
     {% endfor %}
 
-
   </ul>
+
   <div class="product-page__container">
 
     <!-- LEFT: Product Gallery -->
@@ -55,7 +53,6 @@
 
       <section class="splide" aria-labelledby="carousel-heading">
         {% comment %} <h2 id="carousel-heading">Splide Basic HTML Example</h2> {% endcomment %}
-
 
         <div class="splide__track">
           <ul class="splide__list">
@@ -125,13 +122,10 @@
         </div>
       {% endif %}
 
-
       <!-- Add To Cart Form -->
-      <form
-        action="{{ routes.cart_add_url }}"
-        method="post"
-        enctype="multipart/form-data"
-        class="product-form">
+      {% form 'product'
+        , product
+        , class: 'product-form' %}
 
         <input
           type="hidden"
@@ -152,7 +146,6 @@
             min="1">
         </div>
 
-
         <!-- Add To Cart -->
         <button
           type="submit"
@@ -169,7 +162,7 @@
 
         </button>
 
-      </form>
+      {% endform %}
 
     </div>
 
@@ -177,8 +170,26 @@
 </section>
 
 
-<script>
-  new Splide( '.splide' ).mount();
+<script defer>
+  var splide = new Splide('#main-carousel', {
+    pagination: false,
+  });
+  
+  splide.mount();
+  
+  // Collects LI elements:
+  var thumbnails = document.getElementsByClassName('thumbnail');
+  
+  for (var i = 0; i < thumbnails.length; i++) {
+    initThumbnail(thumbnails[i], i);
+  }
+  
+  // The function to initialize each thumbnail.
+  function initThumbnail(thumbnail, index) {
+    thumbnail.addEventListener('click', function () {
+      // move the carousel
+    });
+  }
 </script>
 
 <style>
@@ -227,14 +238,12 @@
     object-fit: cover;
   }
 
-
   .product-gallery__thumbnails {
     display: flex;
     gap: 12px;
     margin-top: 15px;
     overflow-x: auto;
   }
-
 
   .product-gallery__thumbnail {
     width: 80px;
@@ -246,11 +255,9 @@
     flex-shrink: 0;
   }
 
-
   .product-gallery__thumbnail:hover {
     border-color: #111;
   }
-
 
   .product-gallery__thumbnail img {
     width: 100%;
@@ -271,7 +278,6 @@
     padding-top: 10px;
   }
 
-
   .product-info__title {
     margin: 0 0 15px;
     font-size: 38px;
@@ -280,14 +286,12 @@
     color: #111;
   }
 
-
   .product-info__price {
     margin-bottom: 25px;
     font-size: 22px;
     font-weight: 600;
     color: #111;
   }
-
 
   .product-info__description {
     margin-bottom: 30px;
@@ -308,14 +312,12 @@
     margin-bottom: 20px;
   }
 
-
   .product-form__quantity label {
     display: block;
     margin-bottom: 8px;
     font-size: 15px;
     font-weight: 600;
   }
-
 
   .product-form__quantity input {
     width: 80px;
@@ -351,11 +353,9 @@
     transition: background 0.2s ease;
   }
 
-
   .product-form__button:hover {
     background: #333;
   }
-
 
   .product-form__button:disabled {
     background: #999;
@@ -393,6 +393,27 @@
       font-size: 20px;
     }
 
+    .thumbnails {
+      display: flex;
+      margin: 1rem auto 0;
+      padding: 0;
+      justify-content: center;
+    }
+
+    .thumbnail {
+      width: 70px;
+      height: 70px;
+      overflow: hidden;
+      list-style: none;
+      margin: 0 0.2rem;
+      cursor: pointer;
+    }
+
+    .thumbnail img {
+      width: 100%;
+      height: auto;
+    }
+
   }
 
 </style>
@@ -401,23 +422,23 @@
 <script>
   
   function changeProductImage(imageUrl) {
-  const mainImage = document.getElementById("ProductMainImage");
+    const mainImage = document.getElementById("ProductMainImage");
   
-  if (mainImage) {
-    mainImage.src = imageUrl;
-  }
+    if (mainImage) {
+      mainImage.src = imageUrl;
+    }
   }
 </script>
 
 
 {% comment %} {% schema %}
-                                                      {
-                                                        "name": "Product Page",
-                                                        "settings": [],
-                                                        "presets": [
-                                                          {
-                                                            "name": "Product Page"
-                                                          }
-                                                        ]
-                                                      }
+                  {
+                    "name": "Product Page",
+                    "settings": [],
+                    "presets": [
+                     {
+                        "name": "Product Page"
+                      }
+                    ]
+                  }
 {% endschema %} {% endcomment %}
