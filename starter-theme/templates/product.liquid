@@ -4,7 +4,7 @@
 <script src="{{ 'splide.min.js' | asset_url }}" defer></script>
 
 {% comment %} 
-  Product Page Section 
+            Product Page Section 
 {% endcomment %}
 
 <section class="product-page">
@@ -134,17 +134,68 @@
 
         <!-- Quantity -->
         <div class="product-form__quantity">
-          <label for="Quantity">
+          {% comment %} <label for="Quantity">
             Quantity
-          </label>
+          </label> {% endcomment %}
 
-          <input
+
+          {% comment %} <div class="quantity-wrapper">
+                                    <label for="Quantity">Quantity</label>
+    
+                                    <div class="quantity-box">
+                                      <button
+                                        type="button"
+                                        class="quantity-btn"
+                                        onclick="decreaseQuantity()">−</button>
+    
+                                      <input
+                                        type="number"
+                                        id="Quantity"
+                                        name="quantity"
+                                        value="1"
+                                        min="1">
+    
+                                      <button
+                                        type="button"
+                                        class="quantity-btn"
+                                        onclick="increaseQuantity()">+</button>
+                                    </div>
+                              </div> {% endcomment %}
+
+                              {% render 'qty' %}
+
+  {% form 'product', product, class: 'product-form', id: 'product-form' %}
+
+  <input
+    type="hidden"
+    name="id"
+    value="{{ product.selected_or_first_available_variant.id }}">
+
+  {% render 'qty' %}
+
+  <button
+    type="submit"
+    name="add"
+    class="product-form__button"
+    {% unless product.available %}disabled{% endunless %}>
+
+    {% if product.available %}
+      Add to Cart
+    {% else %}
+      Sold Out
+    {% endif %}
+
+  </button>
+
+{% endform %}
+
+          {% comment %} <input
             type="number"
             id="Quantity"
             name="quantity"
             value="1"
             min="1">
-        </div>
+        </div> {% endcomment %}
 
         <!-- Add To Cart -->
         <button
@@ -320,7 +371,7 @@
   }
 
   .product-form__quantity input {
-    width: 80px;
+    width: 60px;
     height: 45px;
     padding: 8px 12px;
     border: 1px solid #ccc;
@@ -416,6 +467,7 @@
 
   }
 
+
 </style>
 
 
@@ -430,15 +482,87 @@
   }
 </script>
 
+{% comment %} 
+{% schema %}
+  {
+    "name": "Product Page",
+    "settings": [],
+    "presets": [
+     {
+        "name": "Product Page"
+      }
+    ]
+  }
+{% endschema %}  {% endcomment %}
 
-{% comment %} {% schema %}
-                  {
-                    "name": "Product Page",
-                    "settings": [],
-                    "presets": [
-                     {
-                        "name": "Product Page"
-                      }
-                    ]
-                  }
-{% endschema %} {% endcomment %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const form = document.getElementById("product-form");
+
+  if (!form) return;
+
+  form.addEventListener("submit", async function (event) {
+
+    event.preventDefault();
+
+    const variantId = form.querySelector('[name="id"]').value;
+    const quantityInput = form.querySelector('[name="quantity"]');
+
+    const quantity = parseInt(quantityInput.value) || 1;
+
+    try {
+
+      // Check current cart
+      const cartResponse = await fetch('/cart.js');
+      const cart = await cartResponse.json();
+
+      // Check whether this variant already exists
+      const existingItem = cart.items.find(
+        item => item.variant_id == variantId
+      );
+
+      if (existingItem) {
+
+        // Replace existing quantity
+        await fetch('/cart/change.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: existingItem.key,
+            quantity: quantity
+          })
+        });
+
+      } else {
+
+        // Add new product
+        await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: variantId,
+            quantity: quantity
+          })
+        });
+
+      }
+
+      // Go to cart
+      window.location.href = '/cart';
+
+    } catch (error) {
+
+      console.error("Add to cart error:", error);
+
+    }
+
+  });
+
+});
+</script>
