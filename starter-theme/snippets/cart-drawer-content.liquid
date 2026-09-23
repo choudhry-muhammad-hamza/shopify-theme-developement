@@ -1,0 +1,150 @@
+{% if cart.item_count > 0 %}
+
+  <div class="cart-items">
+
+    {% for item in cart.items %}
+
+      <div class="cart-item" data-line="{{ forloop.index }}">
+
+        <a href="{{ item.url }}" class="cart-item__image">
+
+          {% if item.image %}
+
+            <img
+              src="{{ item.image | image_url: width: 180 }}"
+              alt="{{ item.product.title | escape }}"
+              width="90"
+              height="90"
+              loading="lazy">
+
+          {% endif %}
+
+        </a>
+
+
+        <div class="cart-item__details">
+
+          <a href="{{ item.url }}" class="cart-item__title">
+            {{ item.product.title }}
+          </a>
+
+
+          {% unless item.product.has_only_default_variant %}
+
+            <p class="cart-item__variant">
+              {{ item.variant.title }}
+            </p>
+
+          {% endunless %}
+
+
+          <div class="cart-item__price">
+
+            {{ item.final_line_price | money }}
+
+          </div>
+
+
+          <div class="cart-item__bottom">
+
+            <div class="cart-quantity">
+
+              <button
+                type="button"
+                class="cart-quantity__button"
+                onclick="updateCartQuantity(
+                  {{ forloop.index }},
+                  {{ item.quantity | minus: 1 }}
+                )">
+                −
+              </button>
+
+
+              <span class="cart-quantity__value">
+                {{ item.quantity }}
+              </span>
+
+
+              <button
+                type="button"
+                class="cart-quantity__button"
+                onclick="updateCartQuantity(
+                  {{ forloop.index }},
+                  {{ item.quantity | plus: 1 }}
+                )">
+                +
+              </button>
+
+            </div>
+
+
+            <button
+              type="button"
+              class="cart-item__remove"
+              onclick="removeCartItem(
+                {{ forloop.index }}
+              )">
+              Remove
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    {% endfor %}
+
+  </div>
+
+
+  <div class="cart-drawer__footer">
+
+    <div class="cart-subtotal">
+
+      <span>
+        Subtotal
+      </span>
+
+      <strong>
+        {{ cart.total_price | money }}
+      </strong>
+
+    </div>
+
+
+    <a href="{{ routes.cart_url }}" class="cart-view-button">
+      View Cart
+    </a>
+
+
+    <a href="/checkout" class="cart-checkout-button">
+      Checkout
+    </a>
+
+  </div>
+
+
+{% else %}
+
+  <div class="cart-empty">
+
+    <div class="cart-empty__icon">
+      🛒
+    </div>
+
+    <h3>
+      Your cart is empty
+    </h3>
+
+    <p>
+      Add some products to your cart.
+    </p>
+
+    <a href="/collections/all" class="cart-empty__button">
+      Continue Shopping
+    </a>
+
+  </div>
+
+{% endif %}
