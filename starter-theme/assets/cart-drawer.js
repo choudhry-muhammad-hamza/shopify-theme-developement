@@ -36,7 +36,6 @@ window.closeCartDrawer = function () {
   if (cartOverlay) {
     cartOverlay.classList.remove("active");
   }
-
   cartDrawer.setAttribute("aria-hidden", "true");
 
   document.body.style.overflow = "";
