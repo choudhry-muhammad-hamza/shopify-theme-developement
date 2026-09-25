@@ -41,7 +41,6 @@ window.closeCartDrawer = function () {
 
   document.body.style.overflow = "";
 };
-
 /* CLOSE BUTTON */
 
 if (cartDrawerClose) {
