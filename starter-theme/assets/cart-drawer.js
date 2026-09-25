@@ -43,6 +43,7 @@ window.closeCartDrawer = function () {
 };
 
 /* CLOSE BUTTON */
+
 if (cartDrawerClose) {
   cartDrawerClose.addEventListener("click", function () {
     window.closeCartDrawer();
