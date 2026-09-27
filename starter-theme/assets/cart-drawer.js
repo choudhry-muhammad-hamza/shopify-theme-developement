@@ -26,7 +26,7 @@ window.openCartDrawer = function () {
 
 /* =========================
    CLOSE DRAWER
-========================= */
+========================== */
 
 window.closeCartDrawer = function () {
   if (!cartDrawer) return;
