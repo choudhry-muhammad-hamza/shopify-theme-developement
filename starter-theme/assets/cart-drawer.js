@@ -8,7 +8,7 @@ const cartDrawerContent = document.getElementById("cartDrawerContent");
 
 /* =========================
    OPEN DRAWER
-======================== */
+========================== */
 
 window.openCartDrawer = function () {
   if (!cartDrawer) return;
