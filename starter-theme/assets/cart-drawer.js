@@ -6,7 +6,7 @@ const cartDrawerClose = document.getElementById("cartDrawerClose");
 
 const cartDrawerContent = document.getElementById("cartDrawerContent");
 
-/* ==========================
+/* =========================
    OPEN DRAWER
 ========================== */
 
