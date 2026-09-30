@@ -7,7 +7,7 @@ const cartDrawerClose = document.getElementById("cartDrawerClose");
 const cartDrawerContent = document.getElementById("cartDrawerContent");
 
 /* ==========================
-   OPEN DRAWER Folder
+   OPEN DRAWER
 ========================== */
 
 window.openCartDrawer = function () {
