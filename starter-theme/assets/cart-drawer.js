@@ -24,9 +24,9 @@ window.openCartDrawer = function () {
   document.body.style.overflow = "hidden";
 };
 
-/* ==========================
+/* =========================
    CLOSE DRAWER
-========================= */
+======================== */
 
 window.closeCartDrawer = function () {
   if (!cartDrawer) return;
