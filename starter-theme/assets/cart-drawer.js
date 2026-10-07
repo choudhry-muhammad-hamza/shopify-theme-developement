@@ -24,7 +24,7 @@ window.openCartDrawer = function () {
   document.body.style.overflow = "hidden";
 };
 
-/* ===========================
+/* =========================
    CLOSE DRAWER
 ======================== */
 
