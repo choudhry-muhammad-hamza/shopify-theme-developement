@@ -29,9 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  /* =======================
+  /* ======================
      PRODUCT FORM
-  ======================== */
+  ======================= */
 
   const productForm = document.getElementById("product-form");
 
